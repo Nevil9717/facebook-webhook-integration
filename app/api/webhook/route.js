@@ -2,7 +2,7 @@
 import { NextResponse } from "next/server";
 
 export async function GET(request) {
-  const VERIFY_TOKEN = "VERIFY_TOKEN";
+  const VERIFY_TOKEN = process.env.VERIFY_TOKEN;
 
   const { searchParams } = new URL(request.url);
   const mode = searchParams.get("hub.mode");
