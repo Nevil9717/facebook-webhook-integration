@@ -6,6 +6,7 @@ import Messages from "./components/Messages";
 
 export default function Home() {
   const [accessToken, setAccessToken] = useState(null);
+  const [pageAccessToken, setPageAccessToken] = useState(null);
   const [userId, setUserId] = useState(null);
   const [pageId, setPageId] = useState(null);
 
@@ -19,9 +20,10 @@ export default function Home() {
         userId={userId}
         accessToken={accessToken}
         setPageId={setPageId}
+        setPageAccessToken={setPageAccessToken}
       />
     );
   }
 
-  return <Messages pageId={pageId} accessToken={accessToken} />;
+  return <Messages pageId={pageId} accessToken={pageAccessToken} />;
 }

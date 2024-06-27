@@ -31,6 +31,7 @@ export async function POST(request) {
     );
 
     const messages = await Promise.all(messagesPromises);
+    console.log("🚀 ~ file: route.js:34 ~ POST ~ messages:", messages);
 
     // Flatten the array of arrays
     const flatMessages = messages.flat();

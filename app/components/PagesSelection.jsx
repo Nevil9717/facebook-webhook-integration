@@ -1,7 +1,16 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 
-const PagesSelection = ({ userId, accessToken, setPageId }) => {
+const PagesSelection = ({
+  userId,
+  accessToken,
+  setPageId,
+  setPageAccessToken,
+}) => {
+  console.log(
+    "🚀 ~ file: PagesSelection.jsx:5 ~ PagesSelection ~ PageAccessToken:",
+    accessToken
+  );
   const [pages, setPages] = useState([]);
 
   useEffect(() => {
@@ -11,6 +20,10 @@ const PagesSelection = ({ userId, accessToken, setPageId }) => {
           userId,
           accessToken,
         });
+        console.log(
+          "🚀 ~ file: PagesSelection.jsx:14 ~ fetchPages ~ data:",
+          data
+        );
         setPages(data.pages);
       } catch (error) {
         console.error(error);
@@ -20,17 +33,28 @@ const PagesSelection = ({ userId, accessToken, setPageId }) => {
     fetchPages();
   }, [userId, accessToken]);
 
-  const handlePageSelect = (pageId) => {
+  const handlePageSelect = (pageId, access_token) => {
+    console.log(
+      "🚀 ~ file: PagesSelection.jsx:25 ~ handlePageSelect ~ pageId:",
+      pageId
+    );
     setPageId(pageId);
+    setPageAccessToken(access_token);
   };
 
   return (
     <div>
       <h1>Select a Page</h1>
       <ul>
+        {console.log(
+          "🚀 ~ file: PagesSelection.jsx:50 ~ PagesSelection ~ pages:",
+          pages
+        )}
         {pages.map((page) => (
           <li key={page.id}>
-            <button onClick={() => handlePageSelect(page.id)}>
+            <button
+              onClick={() => handlePageSelect(page.id, page.access_token)}
+            >
               {page.name}
             </button>
           </li>
