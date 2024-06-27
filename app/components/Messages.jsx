@@ -23,6 +23,10 @@ const Messages = ({ pageId, accessToken }) => {
   return (
     <div>
       <h1>Messages</h1>
+      {console.log(
+        "🚀 ~ file: Messages.jsx:37 ~ Messages ~ messages:",
+        messages
+      )}
       <ul>
         {messages.map((message) => (
           <li key={message.id}>

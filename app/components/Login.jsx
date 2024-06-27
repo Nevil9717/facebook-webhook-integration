@@ -10,10 +10,6 @@ const Login = ({ setAccessToken, setUserId }) => {
     console.log("🚀 ~ Inside handleLogin");
     window.FB.login(
       (response) => {
-        console.log(
-          "🚀 ~ file: Login.jsx:13 ~ handleLogin ~ response:",
-          response
-        );
         if (response.authResponse) {
           const { accessToken, userID } = response.authResponse;
           setAccessToken(accessToken);
