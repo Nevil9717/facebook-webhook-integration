@@ -18,7 +18,7 @@ export async function POST(request) {
     const messagesPromises = conversationsData.data.map(
       async (conversation) => {
         const { data: messagesData } = await axios.get(
-          `https://graph.facebook.com/${conversation.id}/messages?access_token=${accessToken}&fields=message,from`
+          `https://graph.facebook.com/${conversation.id}/messages?access_token=${accessToken}&fields=message,from,created_time`
         );
 
         return messagesData.data.map((message) => ({
@@ -26,6 +26,7 @@ export async function POST(request) {
           text: message.message,
           senderId: message.from.id,
           senderName: message.from.name,
+          createdTime: message.created_time,
         }));
       }
     );

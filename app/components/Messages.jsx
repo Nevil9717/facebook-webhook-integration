@@ -2,7 +2,30 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 
 const Messages = ({ pageId, accessToken }) => {
-  const [messages, setMessages] = useState([]);
+  const [groupedMessages, setGroupedMessages] = useState([]);
+
+  const groupAndSortMessages = (messages) => {
+    const groupedMessages = messages.reduce((acc, message) => {
+      const { senderId, senderName } = message;
+      if (!acc[senderId]) {
+        acc[senderId] = {
+          senderId,
+          senderName,
+          messages: [],
+        };
+      }
+      acc[senderId].messages.push(message);
+      return acc;
+    }, {});
+
+    Object.keys(groupedMessages).forEach((key) => {
+      groupedMessages[key].messages.sort(
+        (a, b) => new Date(a.createdTime) - new Date(b.createdTime)
+      );
+    });
+
+    return Object.values(groupedMessages);
+  };
 
   useEffect(() => {
     const fetchMessages = async () => {
@@ -11,7 +34,8 @@ const Messages = ({ pageId, accessToken }) => {
           pageId,
           accessToken,
         });
-        setMessages(data.messages);
+        const grouped = groupAndSortMessages(data.messages);
+        setGroupedMessages(grouped);
       } catch (error) {
         console.error(error);
       }
@@ -23,22 +47,26 @@ const Messages = ({ pageId, accessToken }) => {
   return (
     <div>
       <h1>Messages</h1>
-      {console.log(
-        "🚀 ~ file: Messages.jsx:37 ~ Messages ~ messages:",
-        messages
-      )}
-      <ul>
-        {messages.map((message) => (
-          <li key={message.id}>
-            <p>
-              <strong>Sender:</strong> {message.senderName} ({message.senderId})
-            </p>
-            <p>
-              <strong>Message:</strong> {message.text}
-            </p>
-          </li>
-        ))}
-      </ul>
+      {groupedMessages.map((group) => (
+        <div key={group.senderId}>
+          <h2>
+            {group.senderName} ({group.senderId})
+          </h2>
+          <ul>
+            {group.messages.map((message) => (
+              <li key={message.id}>
+                <p>
+                  <strong>Time:</strong>{" "}
+                  {new Date(message.createdTime).toLocaleString()}
+                </p>
+                <p>
+                  <strong>Message:</strong> {message.text}
+                </p>
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))}
     </div>
   );
 };
