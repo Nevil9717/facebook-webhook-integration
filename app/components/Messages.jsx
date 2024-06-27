@@ -47,12 +47,11 @@ const Messages = ({ pageId, accessToken }) => {
   return (
     <div>
       <h1>Messages</h1>
+      <hr />
       {groupedMessages.map((group) => (
         <div key={group.senderId}>
-          <h2>
-            {group.senderName} ({group.senderId})
-          </h2>
-          <ul>
+          <h2>{group.senderName}</h2>
+          <ul className="px-1">
             {group.messages.map((message) => (
               <li key={message.id}>
                 <p>
@@ -62,9 +61,11 @@ const Messages = ({ pageId, accessToken }) => {
                 <p>
                   <strong>Message:</strong> {message.text}
                 </p>
+                <br />
               </li>
             ))}
           </ul>
+          <br />
         </div>
       ))}
     </div>

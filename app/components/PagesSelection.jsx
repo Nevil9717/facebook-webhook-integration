@@ -45,7 +45,7 @@ const PagesSelection = ({
   return (
     <div>
       <h1>Select a Page</h1>
-      <ul>
+      <ul className="px-1">
         {console.log(
           "🚀 ~ file: PagesSelection.jsx:50 ~ PagesSelection ~ pages:",
           pages
